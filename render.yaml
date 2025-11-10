@@ -1,6 +1,11 @@
-services: 
-  - type: web 
-    name: mcp-proxy-302 
-    env: python 
-    buildCommand: pip install -r requirements.txt 
-    startCommand: python mcp_server.py 
+services:
+  - type: web
+    name: mcp-proxy-302
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python mcp_server.py
+    envVars:
+      - key: API_302_KEY
+        sync: false
+      - key: PORT
+        value: 10000
