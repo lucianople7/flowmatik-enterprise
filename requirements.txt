@@ -1,5 +1,1 @@
-mcp
-autogen
-flask
-requests
-python-dotenv
+aiohttp 
