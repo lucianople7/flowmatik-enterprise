@@ -6,8 +6,8 @@ $ErrorActionPreference = "Stop"
 Write-Host "🚀 Creando PR para flowmatik_connector..." -ForegroundColor Cyan
 
 # Verificar que estamos en el directorio correcto
-if (-not (Test-Path "flowmatik_connector.py")) {
-    Write-Host "❌ Error: No se encuentra flowmatik_connector.py" -ForegroundColor Red
+if (-not (Test-Path "autogen/connectors/flowmatik_connector.py")) {
+    Write-Host "❌ Error: No se encuentra autogen/connectors/flowmatik_connector.py" -ForegroundColor Red
     Write-Host "   Ejecuta este script desde el directorio flowmatik-enterprise" -ForegroundColor Yellow
     exit 1
 }
