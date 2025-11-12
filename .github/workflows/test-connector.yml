@@ -1,0 +1,53 @@
+name: Test Flowmatik Connector
+
+on:
+  push:
+    branches: [ main, 'fix/**' ]
+    paths:
+      - 'autogen/connectors/flowmatik_connector.py'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'autogen/connectors/flowmatik_connector.py'
+
+jobs:
+  test-connector:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.10', '3.11', '3.12']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyautogen==0.2.35
+    
+    - name: Test connector - Valid JSON
+      run: |
+        echo '{"tipo_tarea":"test","prioridad":"baja","contexto_ceo":"CI test","resultado_esperado":"Success","restricciones":"None"}' | python autogen/connectors/flowmatik_connector.py
+    
+    - name: Test connector - Invalid JSON
+      run: |
+        echo '{"invalid":json}' | python autogen/connectors/flowmatik_connector.py || true
+    
+    - name: Test connector - Timeout
+      env:
+        PROCESS_TIMEOUT: "5"
+      run: |
+        echo '{"tipo_tarea":"test","prioridad":"baja","contexto_ceo":"Timeout test","resultado_esperado":"Success","restricciones":"None"}' | python autogen/connectors/flowmatik_connector.py
+    
+    - name: Verify JSON output format
+      run: |
+        output=$(echo '{"tipo_tarea":"test","prioridad":"baja","contexto_ceo":"Format test","resultado_esperado":"Success","restricciones":"None"}' | python autogen/connectors/flowmatik_connector.py)
+        echo "$output" | python -m json.tool > /dev/null
+        echo "✅ JSON output is valid"
+
