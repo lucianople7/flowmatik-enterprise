@@ -12,13 +12,13 @@
 
 ```powershell
 $env:PROCESS_TIMEOUT = "60"
-'{"tipo_tarea":"monetizacion","prioridad":"alta","contexto_ceo":"Generar ingresos en 48h"}' | python flowmatik_connector.py > resultado.json 2> logs.json
+'{"tipo_tarea":"monetizacion","prioridad":"alta","contexto_ceo":"Generar ingresos en 48h"}' | python autogen/connectors/flowmatik_connector.py > resultado.json 2> logs.json
 ```
 
 ## Uso (bash)
 
 ```bash
-PROCESS_TIMEOUT=60 echo '{"tipo_tarea":"monetizacion","prioridad":"alta","contexto_ceo":"Generar ingresos en 48h"}' | python3 flowmatik_connector.py > resultado.json 2> logs.json
+PROCESS_TIMEOUT=60 echo '{"tipo_tarea":"monetizacion","prioridad":"alta","contexto_ceo":"Generar ingresos en 48h"}' | python3 autogen/connectors/flowmatik_connector.py > resultado.json 2> logs.json
 ```
 
 ## Formato de input/output
