@@ -17,7 +17,7 @@ import os
 import time
 import traceback
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 
 PROCESS_TIMEOUT: int = int(os.getenv("PROCESS_TIMEOUT", "30"))  # segundos por defecto
@@ -92,7 +92,7 @@ def integrated_process_task(task_data: Dict[str, Any]) -> Dict[str, Any]:
             "roi_estimado": roi,
             "timeline_dias": timeline,
         },
-        "modulo_usado": "mcp_autogen_bridge" if BRIDGE_AVAILABLE else "implementacion_basica_integrada",
+        "modulo_usado": "implementacion_basica_integrada",
         "timestamp": now_iso_z(),
     }
 
@@ -132,7 +132,7 @@ def run_process_task(task_data: Dict[str, Any], timeout_seconds: int = PROCESS_T
 
 # ---- Entrada / Salida y validaciones ----
 
-def parse_input() -> (Optional[Dict[str, Any]], Optional[str]):
+def parse_input() -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
     raw = ""
     try:
         raw = sys.stdin.read()
